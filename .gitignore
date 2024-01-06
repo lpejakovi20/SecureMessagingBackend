@@ -475,17 +475,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
-WebApplication2/obj/Debug/net6.0/MrezeBackend.assets.cache
-
-WebApplication2/obj/Debug/net6.0/MrezeBackend.csproj.AssemblyReference.cache
-
-WebApplication2/obj/Debug/net6.0/MrezeBackend.GeneratedMSBuildEditorConfig.editorconfig
-
-WebApplication2/obj/MrezeBackend.csproj.nuget.dgspec.json
-
-WebApplication2/obj/MrezeBackend.csproj.nuget.g.props
-
-WebApplication2/obj/project.assets.json
-
-WebApplication2/obj/project.nuget.cache
