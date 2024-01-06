@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MrezeBackend.DTOs.MessageDTOs;
+using MrezeBackend.Entities;
 using MrezeBackend.Helpers;
+using MrezeBackend.Services;
 
 namespace MrezeBackend.Controllers
 {
@@ -8,54 +10,46 @@ namespace MrezeBackend.Controllers
     [Route("[controller]")]
     public class MessageController : ControllerBase
     {
-        [HttpPost("send")]
-        public IActionResult RecordMessage([FromBody] MessageDTO messageDTO)
-        {
-            string senderId = messageDTO.SenderId;
-            string receiverId = messageDTO.ReceiverId;
-            string content = messageDTO.Content;
+        private readonly InboxService _inboxService;
 
+        public MessageController(UserService userService, InboxService inboxService)
+        {
+            _inboxService = inboxService;
+        }
+
+
+        [HttpPost("send")]
+        public async Task<IActionResult> RecordMessageAsync([FromBody] MessageDTO messageDTO)
+        {
             try
             {
-                string decryptedContent = EncryptionHelper.DecryptSymmetric(Convert.FromBase64String(content), senderId);
-                MessageDTO messageToStore = new MessageDTO();
-                messageToStore.SenderId = senderId;
-                messageToStore.ReceiverId = receiverId;
-                messageToStore.Content = decryptedContent;
+                Console.WriteLine("testt");
+                string decryptedContent = EncryptionHelper.DecryptSymmetric(Convert.FromBase64String(messageDTO.Content), messageDTO.SenderId.ToString());
+                
+                Console.WriteLine(decryptedContent);
 
-                InboxManager.StoreMessage(messageToStore);
+                messageDTO.Content = decryptedContent;
+                var message = await _inboxService.saveMessage(messageDTO);
 
+                if (message == null)
+                {
+                    return StatusCode(404, "Client with the provided email does not exist.");
+                }
                 return Ok("Message successfully sent.");
             }
             catch (Exception ex)
             {
-                return BadRequest("Message content was not properly encrypted on the client side.");
+                //return BadRequest("Message content was not properly encrypted on the client side.");
+                return StatusCode(404, "Message content was not properly encrypted on the client side.");
             }
-
         }
 
         [HttpGet("getInbox/{clientId}")]
-        public IActionResult GetInbox(string clientId)
+        public async Task<IActionResult> GetInbox(int clientId)
         {
-            var inbox = InboxManager.GetClientInbox(clientId);
+            InboxDTO inbox = await _inboxService.GetClientInbox(clientId);
 
-            if(inbox == null)
-            {
-                return Ok(inbox);
-            }
-
-            var encryptedMessages = new List<MessageInInboxDTO>();
-
-            foreach (var message in inbox)
-            {
-                var newObject = new MessageInInboxDTO();
-                newObject.SenderId = message.SenderId;
-                newObject.Content = EncryptionHelper.EncryptSymmetric(message.Content, clientId);
-
-                encryptedMessages.Add(newObject);
-            }
-
-            return Ok(encryptedMessages);
+            return Ok(inbox);
         }
     }
 }

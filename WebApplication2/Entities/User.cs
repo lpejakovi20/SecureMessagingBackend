@@ -9,10 +9,10 @@ namespace MrezeBackend.Entities
         public string Password { get; set; } = null!;
         public string Name { get; set; } = null!;
 
-        [InverseProperty("Sender")]
+        /*[InverseProperty("Sender")]
         public List<Message> SentMessages { get; set; } = new List<Message>();
 
         [InverseProperty("Receiver")]
-        public List<Message> ReceivedMessages { get; set; } = new List<Message>();
+        public List<Message> ReceivedMessages { get; set; } = new List<Message>();*/
     }
 }
