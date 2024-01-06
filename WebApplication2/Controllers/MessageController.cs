@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MrezeBackend.DTOs.MessageDTOs;
-using MrezeBackend.Entities;
 using MrezeBackend.Helpers;
 using MrezeBackend.Services;
 
@@ -39,8 +38,7 @@ namespace MrezeBackend.Controllers
             }
             catch (Exception ex)
             {
-                //return BadRequest("Message content was not properly encrypted on the client side.");
-                return StatusCode(404, "Message content was not properly encrypted on the client side.");
+                return BadRequest("Message content was not properly encrypted on the client side.");
             }
         }
 

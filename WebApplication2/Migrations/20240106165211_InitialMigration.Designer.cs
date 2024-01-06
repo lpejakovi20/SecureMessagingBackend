@@ -11,7 +11,7 @@ using MrezeBackend;
 namespace MrezeBackend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240106120023_InitialMigration")]
+    [Migration("20240106165211_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -78,27 +78,20 @@ namespace MrezeBackend.Migrations
             modelBuilder.Entity("MrezeBackend.Entities.Message", b =>
                 {
                     b.HasOne("MrezeBackend.Entities.User", "Receiver")
-                        .WithMany("ReceivedMessages")
+                        .WithMany()
                         .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MrezeBackend.Entities.User", "Sender")
-                        .WithMany("SentMessages")
+                        .WithMany()
                         .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Receiver");
 
                     b.Navigation("Sender");
-                });
-
-            modelBuilder.Entity("MrezeBackend.Entities.User", b =>
-                {
-                    b.Navigation("ReceivedMessages");
-
-                    b.Navigation("SentMessages");
                 });
 #pragma warning restore 612, 618
         }
