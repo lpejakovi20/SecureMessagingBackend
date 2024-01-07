@@ -51,6 +51,7 @@ namespace MrezeBackend.Controllers
             }
             return Ok(new ClientResponseDTO
             {
+                Id = user.Id,
                 Email = user.Email,
                 Name = user.Name
             });

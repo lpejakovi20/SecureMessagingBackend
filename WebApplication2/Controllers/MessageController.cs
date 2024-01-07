@@ -22,12 +22,11 @@ namespace MrezeBackend.Controllers
         {
             try
             {
-                Console.WriteLine("testt");
                 string decryptedContent = EncryptionHelper.DecryptSymmetric(Convert.FromBase64String(messageDTO.Content), messageDTO.SenderId.ToString());
-                
-                Console.WriteLine(decryptedContent);
+                string decryptedTitle = EncryptionHelper.DecryptSymmetric(Convert.FromBase64String(messageDTO.Title), messageDTO.SenderId.ToString());
 
                 messageDTO.Content = decryptedContent;
+                messageDTO.Title = decryptedTitle;
                 var message = await _inboxService.saveMessage(messageDTO);
 
                 if (message == null)
