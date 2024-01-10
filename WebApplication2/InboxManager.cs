@@ -5,7 +5,7 @@ namespace MrezeBackend
     public class InboxManager
     {
         private static readonly Dictionary<string, List<MessageInInboxDTO>> _inboxes = new Dictionary<string, List<MessageInInboxDTO>>();
-
+        /*
         public static void StoreMessage(MessageDTO messageDTO)
         {
             MessageInInboxDTO messageInInboxDTO = new MessageInInboxDTO();
@@ -27,6 +27,6 @@ namespace MrezeBackend
             }
 
             return null;
-        }
+        }*/
     }
 }
