@@ -1,8 +1,8 @@
-# MrezeBackend
+# SecureMessagingBackend
 
 ## Overview
 
-**MrezeBackend** is a server-side application built using ASP.NET Core, designed for secure user authentication and message management. This application implements key exchange protocols and encryption methods to facilitate secure communication between clients.
+**SecureMessagingBackend** is a server-side application built using ASP.NET Core, designed for secure user authentication and message management. This application implements key exchange protocols and encryption methods to facilitate secure communication between clients.
 
 ## Features
 
